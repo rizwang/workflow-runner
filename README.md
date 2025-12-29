@@ -325,3 +325,59 @@ This project is open-sourced software licensed under the [MIT license](https://o
 ## Support
 
 For issues or questions, please open an issue in the repository.
+
+
+# AI Usage Appendix
+
+## AI Tools Used
+- Tool(s): Cursor and Google Gemini
+- First i upload all files to get the requirement in a net shell and then create a structure and than give prompt to cursor.
+- Writing feature tests
+
+## High-impact Prompts
+
+1. **Prompt goal**: Workflow execution service with step handlers and their logs.
+   - **What you asked for**: Service class to execute workflows with delay and http_check step types
+   - **What you received**: `WorkflowExecutionService` with clean separation of concerns, step execution logic, error handling, and logging
+   - **How you validated / adjusted it**: Ran migrations, executed tests, verified all features work as expected
+
+
+## One example where AI was wrong (required)
+
+- **What the AI suggested**: Initially suggested using Laravel Queues/Jobs for the workflow steps to ensure background processing.
+- **Why it was incorrect**: The PROJECT_SPEC.md explicitly states "Synchronous execution is acceptable" and warns to prioritize "Pragmatism" for the 2-hour window. Setting up a queue worker adds unnecessary deployment friction for the reviewer.
+- **How you detected the issue**: Reviewed the "Soft Cap" section of the main README.md.
+- **What you changed**: Explicitly implemented a synchronous service class that runs in the standard request lifecycle to keep setup as simple as possible.
+
+## Verification Approach
+
+- **Tests you wrote**:
+  - `test_can_create_workflow`: Verifies workflow creation via HTTP request
+  - `test_running_workflow_creates_logs`: Verifies logs are created with proper fields, levels, and associations
+  - `test_workflow_run_status_is_succeeded_on_success`: Explicitly verifies status transitions and completion timestamps
+  - All tests use `RefreshDatabase` trait for clean test environment
+
+- **Manual test script (brief)**:
+  1. Create workflow via UI
+  2. Add delay and http_check steps
+  3. Reorder steps using up/down buttons
+  4. Run workflow and verify execution
+  5. Check run status (succeeded/failed)
+  6. View logs in run details page
+  7. View all logs in logs listing page
+  8. Verify database entries directly
+
+- **Any linters/formatters used**:
+  - Laravel Pint (included in dev dependencies)
+  - PHPUnit for testing
+  - Built-in Laravel validation
+  - No linting errors detected during development
+
+## Time Breakdown (estimate)
+
+- **Setup/scaffolding**:
+  - Project structure analysis
+  - Migration creation
+  - Model setup with relationships
+
+**Total estimated time**: ~1 hours
