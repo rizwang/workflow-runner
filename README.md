@@ -43,7 +43,7 @@ composer install
 Copy the `.env.example` file to `.env`:
 
 ```bash
-cp .env.example .env
+copy .env.example .env
 ```
 
 Generate the application key:
@@ -57,7 +57,7 @@ php artisan key:generate
 The project uses SQLite by default. The database file should already exist at `database/database.sqlite`. If it doesn't exist, create it:
 
 ```bash
-touch database/database.sqlite
+type nul > database/database.sqlite
 ```
 
 Or on Windows:
