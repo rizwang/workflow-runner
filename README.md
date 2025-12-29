@@ -316,8 +316,6 @@ The project follows Laravel best practices:
 # Run all tests
 php artisan test
 
-# Run with coverage (if configured)
-php artisan test --coverage
 ```
 
 ## License
