@@ -28,7 +28,7 @@ A Laravel application that allows administrators to define workflows made of ste
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/rizwang/workflow-runner.git
 cd workflow-runner
 ```
 
